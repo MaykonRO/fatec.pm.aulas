@@ -11,9 +11,9 @@
        WORKING-STORAGE SECTION.
        01 NOME PIC X(30).
        01 SOBRENOME PIC A(20).
-       01 NUMERO1 PIC 9(4).
+       01 NUMERO1 PIC ZZZ9.
        01 NUMERO2 PIC 9(4).
-       01 RESULTADO PIC 9(5).
+       01 RESULTADO PIC Z(5).
        PROCEDURE DIVISION.
        MAIN-PROCEDURE.
             DISPLAY "Hello world"
