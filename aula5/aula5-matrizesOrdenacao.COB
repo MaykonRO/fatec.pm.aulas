@@ -10,7 +10,8 @@
        FILE SECTION.
        WORKING-STORAGE SECTION.
 
-       01 DADOS-ALUNO 5 NOME-ALUNO PIC X(10).
+       01 DADOS-ALUNO
+           05 NOME-ALUNO PIC X(10) OCCURS 4 TIMES.
 
        01 NOME-PROCURADO PIC X(20).
        01  ENCONTRADO PIC X VALUE "N".
@@ -28,14 +29,9 @@
       *
 
        MOVE "N" TO ENCONTRADO
-
-       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 2
-               DISPLAY "Digite o nome da turma: "
-               ACCEPT NOME-TURMA(I)
-
-           PERFORM VARYING J FROM 1 BY 1 UNTIL J > 3
-               DISPLAY "DIGITE O NOME DO ALUNO " J ": "
-               ACCEPT NOME-ALUNO(I,J)
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 4
+               DISPLAY "DIGITE O NOME DO ALUNO " I ": "
+               ACCEPT NOME-ALUNO(I)
 
            END-PERFORM
        END-PERFORM
@@ -52,19 +48,21 @@
        ACCEPT NOME-PROCURADO
 
 
-       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 2
-           PERFORM VARYING J FROM 1 BY 1 UNTIL J > 3
-               IF NOME-ALUNO(I,J) = NOME-PROCURADO
-                   MOVE "S" TO ENCONTRADO
-                   DISPLAY "Aluno encontrado: " NOME-ALUNO(I,J)
-                   DISPLAY "Turma: " NOME-TURMA(I)
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 3
+           PERFORM VARYING J FROM 1 BY 1 UNTIL J > 4
+               IF NOME-ALUNO(I) > NOME-ALUNO(J)
+                   MOVE NOME-ALUNO(I) TO AUX-NOME
+                   MOVE NOME-ALUNO(J) TO NOME-ALUNO(I)
+                   MOVE AUX-NOME to NOME-ALUNO(J)
+
                END-IF
            END-PERFORM
        END-PERFORM
 
-       IF ENCONTRADO = "N"
-            DISPLAY "Aluno nâo encontrado!"
-       END-IF
+       DISPLAY "Lista Ordenada"
+       PERFORM VARYING I FROM 1 BY 1 UNTIL I > 4
+           DISPLAY NOME-ALUNO(I)
+       END-PERFORM.
 
        STOP RUN.
        END PROGRAM aula5.
